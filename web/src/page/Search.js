@@ -28,6 +28,8 @@ class Search extends Component {
   @observable isLoading = true;
   @observable results = [];
   @observable showResult = false;
+  @observable departure = "";
+  @observable arrival = "";
   constructor(props) {
     super(props);
     Location.master().then(data => {
@@ -58,13 +60,13 @@ class Search extends Component {
       title: "From",
       dataIndex: "from",
       key: "from",
-      render: text => <p>{text}</p>
+      render: text => <p>{this.departure.name}</p>
     },
     {
       title: "To",
       dataIndex: "to",
       key: "to",
-      render: text => <p>{text}</p>
+      render: text => <p>{this.arrival.name}</p>
     }
   ];
   onFromChange = value => {
@@ -80,6 +82,8 @@ class Search extends Component {
     if (!this.to || !this.from || !this.departureDate) {
       return;
     }
+    this.departure = this.locations.filter(l => l.id == this.from)[0];
+    this.arrival = this.locations.filter(l => l.id == this.to)[0];
     FlightSchedule.search(this.from, this.to, this.departureDate).then(data => {
       this.results = data;
       this.showResult = true;
@@ -148,6 +152,7 @@ class Search extends Component {
         </View>
         {this.showResult && (
           <View>
+            <br></br> <br></br> <br></br> <br></br>{" "}
             <Table columns={this.columns} dataSource={this.results}></Table>
           </View>
         )}

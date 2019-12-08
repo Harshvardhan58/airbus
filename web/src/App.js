@@ -1,22 +1,64 @@
-import React from "react";
-import { Router, Route } from "react-router-dom";
-import history from "./history";
-import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
-import Form from "./pages/Form";
-import BulkUpload from "./pages/BulkUpload";
+import React, { Component } from "react";
+import {
+  Route,
+  NavLink,
+  BrowserRouter as Router,
+  Switch
+} from "react-router-dom";
+// import CounterApp from "./CounterApp";
+// import BoxApp from "./BoxApp";
+// import MobxCounterApp from "./MobxCounterApp";
+// import PostApp from "./PostApp";
+import "./App.css";
+import { Layout, Menu } from "antd";
+import Search from "./page/Search";
 
-class AppRouter extends React.Component {
+const { Header, Content } = Layout;
+class App extends Component {
   render() {
     return (
-      <Router history={history}>
-        <Route path="/" exact component={Home} />
-        <Route path="/dashboard" exact component={Dashboard} />
-        <Route path="/form" exact component={Form} />
-        <Route path="/bulk-upload" exact component={BulkUpload} />
-      </Router>
+      <Layout style={{ height: "100%" }}>
+        <Router>
+          <Header style={{ backgroundColor: "white" }}>
+            <Menu mode="horizontal" defaultSelectedKeys={["1"]}>
+              <Menu.Item key="1">
+                <NavLink
+                  exact
+                  activeClassName="active"
+                  className="nav-link"
+                  to="/"
+                >
+                  Search
+                </NavLink>
+              </Menu.Item>
+
+              {/* <Menu.Item key="2">
+                  <NavLink activeClassName="active" className="nav-link" to="/box"></NavLink>
+                </Menu.Item>
+
+                <Menu.Item key="3">
+                  <NavLink activeClassName="active" className="nav-link" to="/mobx">Mobx</NavLink>
+                </Menu.Item>
+
+                <Menu.Item key="4">
+                  <NavLink activeClassName="active" className="nav-link" to="/posts">Posts</NavLink>
+                </Menu.Item> */}
+            </Menu>
+          </Header>
+          <Layout style={{ height: "100%" }}>
+            <Content>
+              <Switch>
+                <Route exact path="/" component={Search} />
+                {/* <Route path="/box" component={BoxApp} />
+                  <Route path='/mobx' component={MobxCounterApp}/>
+                  <Route path='/posts' component={PostApp}/> */}
+              </Switch>
+            </Content>
+          </Layout>
+        </Router>
+      </Layout>
     );
   }
 }
 
-export default AppRouter;
+export default App;

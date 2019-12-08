@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: "users/sessions" }
-  resources :feature_sets do
+  resources :location do
     collection do
-      post "bulk_upload" => "feature_sets#bulk_upload"
+      get "master" => "location#master" 
+      get "flights"=>"location#search"
     end
-  end
+  end 
+
 end
